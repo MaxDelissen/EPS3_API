@@ -9,9 +9,21 @@ public class Program
         // Add services to the container.
 
         builder.Services.AddControllers();
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowReactApp", policy =>
+            {
+                policy.WithOrigins("http://localhost:3000")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            });
+        });
+
+        //Stupid swagger stuff
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        //End stupid swagger stuff
 
         var app = builder.Build();
 
@@ -27,6 +39,8 @@ public class Program
         app.UseAuthorization();
 
         app.MapControllers();
+
+        app.UseCors("AllowReactApp");
 
         app.Run();
     }
