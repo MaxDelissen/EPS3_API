@@ -40,16 +40,17 @@ public class AuthController(ApplicationDbContext dbContext) : Controller
         }
 
         var authService = new AuthService(dbContext);
-        string? token = authService.RegisterUser(registerRequest.Email, registerRequest.Password, registerRequest.IsSeller);
-        if (token == null)
-        {
-            return Conflict("Email already in use.");
-        }
+        var registerResponse = authService.RegisterUser(registerRequest.Email, registerRequest.Password, registerRequest.IsSeller);
 
-        return Ok(new
+        return registerResponse.Result switch
         {
-            token
-        });
+            AuthService.RegisterResult.EmailInUse => Conflict("Email is already in use."),
+            AuthService.RegisterResult.Failure => StatusCode(500, "Failed to register user."),
+            _ => Ok(new
+                {
+                    token = registerResponse.Token
+                })
+        };
     }
 }
 
