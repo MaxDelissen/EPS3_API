@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Logic;
 using Logic.Data;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +30,27 @@ public class AuthController(ApplicationDbContext dbContext) : Controller
            token
         });
     }
+
+    [HttpPost("register")]
+    public IActionResult Register([FromBody] RegisterRequestDto registerRequest)
+    {
+        if (string.IsNullOrEmpty(registerRequest.Email) || string.IsNullOrEmpty(registerRequest.Password))
+        {
+            return BadRequest("Email and password must be provided.");
+        }
+
+        var authService = new AuthService(dbContext);
+        string? token = authService.RegisterUser(registerRequest.Email, registerRequest.Password, registerRequest.IsSeller);
+        if (token == null)
+        {
+            return Conflict("Email already in use.");
+        }
+
+        return Ok(new
+        {
+            token
+        });
+    }
 }
 
 /// <summary>
@@ -36,6 +58,18 @@ public class AuthController(ApplicationDbContext dbContext) : Controller
 /// </summary>
 public class LoginRequestDto
 {
+    [Required]
     public string Email { get; set; }
+    [Required]
     public string Password { get; set; }
+}
+
+public class RegisterRequestDto
+{
+    [Required]
+    public string Email { get; set; }
+    [Required]
+    public string Password { get; set; }
+    [Required]
+    public bool IsSeller { get; set; }
 }

@@ -20,4 +20,9 @@ public class AuthService(ApplicationDbContext dbContext)
         string token = JwtGenerator.GenerateToken(selectedUser.id ,selectedUser.email, selectedUser.isSeller);
         return token;
     }
+
+    public string? RegisterUser(string registerRequestEmail, string registerRequestPassword, bool registerRequestIsSeller)
+    {
+        throw new NotImplementedException();
+    }
 }
