@@ -1,4 +1,4 @@
-using Logic.Data;
+using DAL;
 using Logic.Utilities;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,7 +24,7 @@ namespace API
 
             // Add DbContext
             string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
             JwtGenerator.Key = builder.Configuration["Jwt:Key"] ?? throw new ArgumentNullException(nameof(args));

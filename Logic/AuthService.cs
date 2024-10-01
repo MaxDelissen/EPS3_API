@@ -1,12 +1,12 @@
-using Logic.Data;
-using Logic.Models;
+/*using Logic.Interfaces;
 using Logic.Utilities;
+using Resources.Models;
 
 namespace Logic;
 
-public class AuthService(ApplicationDbContext dbContext)
+public class AuthService(AppDbContext dbContext)
 {
-    private readonly ApplicationDbContext DbContext = dbContext;
+    private readonly AppDbContext DbContext = dbContext;
 
     private bool IsEmailInUse(string registerRequestEmail) => dbContext.User.Any(u => u.email == registerRequestEmail);
 
@@ -16,10 +16,10 @@ public class AuthService(ApplicationDbContext dbContext)
         if (selectedUser == null)
             return null; // User not found
 
-        if (!password.VerifyPassword(selectedUser.passwordHash))
+        if (!password.VerifyPassword(selectedUser.PasswordHash))
             return null; // Password does not match
 
-        string token = JwtGenerator.GenerateToken(selectedUser.id ,selectedUser.email, selectedUser.isSeller);
+        string token = JwtGenerator.GenerateToken(selectedUser.Id ,selectedUser.Email, selectedUser.IsSeller);
         return token;
     }
 
@@ -31,20 +31,27 @@ public class AuthService(ApplicationDbContext dbContext)
         string passwordHash = registerRequestPassword.HashPassword();
         User newUser = new User
         {
-            email = registerRequestEmail,
-            passwordHash = passwordHash,
-            isSeller = registerRequestIsSeller
+            Email = registerRequestEmail,
+            PasswordHash = passwordHash,
+            IsSeller = registerRequestIsSeller
         };
         dbContext.User.Add(newUser);
         dbContext.SaveChanges();
 
         bool userAdded = dbContext.User.Any(u => u.email == registerRequestEmail);
-        string token = JwtGenerator.GenerateToken(newUser.id, newUser.email, newUser.isSeller);
+        string token = JwtGenerator.GenerateToken(newUser.Id, newUser.Email, newUser.IsSeller);
         return new RegisterResponse
         {
             Result = userAdded ? RegisterResult.Success : RegisterResult.Failure,
             Token = userAdded ? token : null
         };
+
+        public void getUser(int id)
+        {
+
+        }
+
+
     }
 
     public enum RegisterResult
@@ -59,4 +66,4 @@ public class AuthService(ApplicationDbContext dbContext)
         public RegisterResult Result { get; set; }
         public string? Token { get; set; }
     }
-}
+}*/

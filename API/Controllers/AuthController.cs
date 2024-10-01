@@ -1,14 +1,13 @@
-using System.ComponentModel.DataAnnotations;
+/*using System.ComponentModel.DataAnnotations;
+using DAL;
 using Logic;
-using Logic.Data;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AuthController(ApplicationDbContext dbContext) : Controller
+public class AuthController(AppDbContext dbContext) : Controller
 {
     [HttpPost("login")]
     public IActionResult Login([FromBody] LoginRequestDto loginRequest)
@@ -73,4 +72,4 @@ public class RegisterRequestDto
     public string Password { get; set; }
     [Required]
     public bool IsSeller { get; set; }
-}
+}*/
