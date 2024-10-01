@@ -22,10 +22,13 @@ namespace API
                 });
             });
 
-            // Add DbContext
-            string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-            builder.Services.AddDbContext<AppDbContext>(options =>
-                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+            // Add configuration setup
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            builder.Services.AddSingleton(configuration);
+            builder.Services.AddSingleton<AppConfiguration>();
 
             JwtGenerator.Key = builder.Configuration["Jwt:Key"] ?? throw new ArgumentNullException(nameof(args));
 

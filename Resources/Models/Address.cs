@@ -1,8 +1,6 @@
-using Resources.Interfaces.DatabaseTables;
-
 namespace Resources.Models;
 
-public class Address : IAddress
+public class Address
 {
     public int Id { get; set; }
 
@@ -25,6 +23,6 @@ public class Address : IAddress
     public string Country { get; set; }
 
     // Navigation properties
-    public IUser User { get; set; }
-    public ICollection<IOrder> Orders { get; set; }
+    public User User { get; set; }
+    public ICollection<Order> Orders { get; set; }
 }

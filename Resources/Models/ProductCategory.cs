@@ -1,8 +1,6 @@
-using Resources.Interfaces.DatabaseTables;
-
 namespace Resources.Models;
 
-public class ProductCategory : IProductCategory
+public class ProductCategory
 {
     [Required]
     public int ProductId { get; set; }
@@ -11,6 +9,6 @@ public class ProductCategory : IProductCategory
     public int CategoryId { get; set; }
 
     // Navigation properties
-    public IProduct Product { get; set; }
-    public ICategory Category { get; set; }
+    public Product Product { get; set; }
+    public Category Category { get; set; }
 }

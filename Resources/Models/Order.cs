@@ -1,8 +1,6 @@
-using Resources.Interfaces.DatabaseTables;
-
 namespace Resources.Models;
 
-public class Order : IOrder
+public class Order
 {
     public int Id { get; set; }
 
@@ -22,8 +20,8 @@ public class Order : IOrder
     public int ShippingAddressId { get; set; }
 
     // Navigation properties
-    public IUser User { get; set; }
-    public IAddress ShippingAddress { get; set; }
-    public ICollection<IOrderItem> OrderItems { get; set; }
-    public ICollection<IOrderStatusHistory> OrderStatusHistories { get; set; }
+    public User User { get; set; }
+    public Address ShippingAddress { get; set; }
+    public ICollection<OrderItem> OrderItems { get; set; }
+    public ICollection<OrderStatusHistory> OrderStatusHistories { get; set; }
 }

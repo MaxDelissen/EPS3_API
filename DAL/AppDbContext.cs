@@ -5,6 +5,17 @@ namespace DAL
 {
     public class AppDbContext : DbContext
     {
+        private readonly string _connectionString;
+        public AppDbContext(AppConfiguration appConfiguration)
+        {
+            _connectionString = appConfiguration.GetConnectionString();
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseMySQL(_connectionString);
+        }
+        
         public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }

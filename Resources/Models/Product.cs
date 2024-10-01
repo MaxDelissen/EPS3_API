@@ -1,8 +1,6 @@
-using Resources.Interfaces.DatabaseTables;
-
 namespace Resources.Models;
 
-public class Product : IProduct
+public class Product
 {
     public int Id { get; set; }
 
@@ -20,7 +18,7 @@ public class Product : IProduct
     public int Stock { get; set; }
 
     // Navigation properties
-    public ICollection<IProductImage> ProductImages { get; set; }
-    public ICollection<IOrderItem> OrderItems { get; set; }
-    public ICollection<IProductCategory> ProductCategories { get; set; }
+    public ICollection<ProductImage> ProductImages { get; set; }
+    public ICollection<OrderItem> OrderItems { get; set; }
+    public ICollection<ProductCategory> ProductCategories { get; set; }
 }

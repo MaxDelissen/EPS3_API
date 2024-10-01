@@ -1,8 +1,6 @@
-using Resources.Interfaces.DatabaseTables;
-
 namespace Resources.Models;
 
-public class User : IUser
+public class User
 {
     public int Id { get; set; }
 
@@ -16,6 +14,6 @@ public class User : IUser
     public bool IsSeller { get; set; }
 
     // Navigation properties
-    public ICollection<IOrder> Orders { get; set; }
-    public ICollection<IAddress> Addresses { get; set; }
+    public ICollection<Order> Orders { get; set; }
+    public ICollection<Address> Addresses { get; set; }
 }

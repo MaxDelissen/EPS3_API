@@ -1,8 +1,6 @@
-using Resources.Interfaces.DatabaseTables;
-
 namespace Resources.Models;
 
-public class ProductImage : IProductImage
+public class ProductImage
 {
     public int Id { get; set; }
 
@@ -13,5 +11,5 @@ public class ProductImage : IProductImage
     public string ImageLink { get; set; }
 
     // Navigation properties
-    public IProduct Product { get; set; }
+    public Product Product { get; set; }
 }

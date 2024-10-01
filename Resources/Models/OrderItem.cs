@@ -1,8 +1,6 @@
-using Resources.Interfaces.DatabaseTables;
-
 namespace Resources.Models;
 
-public class OrderItem : IOrderItem
+public class OrderItem
 {
     public int Id { get; set; }
 
@@ -19,6 +17,6 @@ public class OrderItem : IOrderItem
     public decimal Price { get; set; } // Price at the time of order
 
     // Navigation properties
-    public IOrder Order { get; set; }
-    public IProduct Product { get; set; }
+    public Order Order { get; set; }
+    public Product Product { get; set; }
 }

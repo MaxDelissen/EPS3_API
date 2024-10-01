@@ -1,8 +1,6 @@
-using Resources.Interfaces.DatabaseTables;
-
 namespace Resources.Models;
 
-public class OrderStatusHistory : IOrderStatusHistory
+public class OrderStatusHistory
 {
     public int Id { get; set; }
 
@@ -16,5 +14,5 @@ public class OrderStatusHistory : IOrderStatusHistory
     public DateTime UpdatedAt { get; set; }
 
     // Navigation properties
-    public IOrder Order { get; set; }
+    public Order Order { get; set; }
 }
