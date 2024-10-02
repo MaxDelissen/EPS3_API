@@ -13,7 +13,7 @@ public class dbTestController : Controller
 
     public dbTestController(IConfiguration configuration)
     {
-        _userRepository = new UserRepository(new AppDbContext(new AppConfiguration(configuration)));
+        _userRepository = new UserRepository(configuration);
     }
 
 
@@ -24,3 +24,4 @@ public class dbTestController : Controller
         return Ok(testClass.GetUsers());
     }
 }
+

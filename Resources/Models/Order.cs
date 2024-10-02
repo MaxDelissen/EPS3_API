@@ -8,7 +8,7 @@ public class Order
     public int UserId { get; set; }
 
     [Required]
-    public byte Status { get; set; }  // Use byte for tinyint
+    public OrderStatus Status { get; set; } = OrderStatus.Pending;
 
     [Required]
     public DateTime CreatedAt { get; set; }

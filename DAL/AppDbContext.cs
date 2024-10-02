@@ -3,6 +3,7 @@ using Resources.Models;
 
 namespace DAL
 {
+    //dotnet ef migrations add {Name} --project DAL --startup-project API //Replace {Name} with the name of the migration
     public class AppDbContext : DbContext
     {
         private readonly string _connectionString;

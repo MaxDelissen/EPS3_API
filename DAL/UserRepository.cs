@@ -8,11 +8,11 @@ namespace DAL;
 public class UserRepository : IUserRepository
 {
     private AppDbContext _context;
-    
-    public UserRepository(AppDbContext context)
+
+    public UserRepository(IConfiguration configuration)
     {
-        _context = context;
+        _context = new AppDbContext(new AppConfiguration(configuration));
     }
     
-    public Task<List<User>> GetUsers() => _context.Users.ToListAsync();
+    public List<User> GetUsers() => _context.Users.ToListAsync().Result;
 }

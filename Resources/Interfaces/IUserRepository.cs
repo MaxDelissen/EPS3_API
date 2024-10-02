@@ -4,5 +4,5 @@ namespace Resources.Interfaces;
 
 public interface IUserRepository
 {
-    Task<List<User>> GetUsers();
+    List<User> GetUsers();
 }

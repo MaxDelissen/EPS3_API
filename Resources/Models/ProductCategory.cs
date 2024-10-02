@@ -1,7 +1,12 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Resources.Models;
 
 public class ProductCategory
 {
+    [Key]
+    public int Id { get; set; } // Define primary key
+
     [Required]
     public int ProductId { get; set; }
 

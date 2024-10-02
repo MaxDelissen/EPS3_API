@@ -7,6 +7,6 @@ public class TestClass(IUserRepository userRepository)
 {
     public List<User> GetUsers()
     {
-        return userRepository.GetUsers().Result;
+        return userRepository.GetUsers();
     }
 }
