@@ -1,6 +1,8 @@
+using System.Reflection;
 using DAL;
 using Logic.Utilities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 namespace API
 {
@@ -34,7 +36,23 @@ namespace API
 
             // Swagger
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Individual Project API",
+                    Description = "API for the Individual Project, online store",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Max Delissen",
+                        Email = "maxdelissen17@gmail.com",
+                    }
+                });
+
+                var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+            });
 
             var app = builder.Build();
 

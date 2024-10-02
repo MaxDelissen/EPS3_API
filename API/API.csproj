@@ -5,6 +5,8 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UserSecretsId>d16ed588-1e35-4c1d-8640-a114102b233e</UserSecretsId>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <NoWarn>CS0618</NoWarn> <!--Disable warnings for non-documented api endpoints-->
     </PropertyGroup>
 
     <ItemGroup>
@@ -16,6 +18,7 @@
         <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
         <PackageReference Include="MySql.EntityFrameworkCore" Version="8.0.5" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+        <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.8.1" />
     </ItemGroup>
 
     <ItemGroup>
