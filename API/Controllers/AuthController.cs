@@ -86,6 +86,11 @@ public class AuthController(IConfiguration configuration) : Controller
                 })
         };
     }
+
+    public IActionResult me()
+    {
+        return Ok("me");
+    }
 }
 
 /// <summary>
