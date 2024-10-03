@@ -2,14 +2,21 @@ using System.ComponentModel.DataAnnotations;
 using DAL;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Annotations;
+using Resources.Interfaces;
 
 namespace API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AuthController(IConfiguration configuration) : Controller
+public class AuthController : Controller
 {
+    private readonly IUserRepository _userRepository;
+
+    public AuthController(IUserRepository userRepository)
+    {
+        _userRepository = userRepository;
+    }
+
     /// <summary>
     /// Logs in a user and returns a token if successful.
     /// </summary>
@@ -39,7 +46,7 @@ public class AuthController(IConfiguration configuration) : Controller
             return BadRequest("Email and password must be provided.");
         }
 
-        var authService = new AuthService(new UserRepository(configuration));
+        var authService = new AuthService(_userRepository);
         string? token = authService.CheckUserGenerateToken(loginRequest.Email, loginRequest.Password);
         if (token == null)
         {
@@ -73,7 +80,7 @@ public class AuthController(IConfiguration configuration) : Controller
             return BadRequest("Email and password must be provided.");
         }
 
-        var authService = new AuthService(new UserRepository(configuration));
+        var authService = new AuthService(_userRepository);
         var registerResponse = authService.RegisterUser(registerRequest.Email, registerRequest.Password, registerRequest.IsSeller);
 
         return registerResponse.Result switch
@@ -85,11 +92,6 @@ public class AuthController(IConfiguration configuration) : Controller
                     token = registerResponse.Token
                 })
         };
-    }
-
-    public IActionResult me()
-    {
-        return Ok("me");
     }
 }
 

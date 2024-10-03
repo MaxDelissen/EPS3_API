@@ -23,6 +23,7 @@ public class UserRepository : IUserRepository
     /// </summary>
     /// <exception cref="InvalidOperationException">Thrown when user not found</exception>
     public User GetUserByEmail(string email) => _context.Users.FirstOrDefault(u => u.Email == email) ?? throw new InvalidOperationException("User not found");
+    public User GetUserById(int id) => _context.Users.FirstOrDefault(u => u.Id == id) ?? throw new InvalidOperationException("User not found");
 
     public bool AddUser(User user)
     {

@@ -12,5 +12,6 @@ public interface IUserRepository
     /// </summary>
     /// <exception cref="InvalidOperationException">Thrown when user not found</exception>
     User GetUserByEmail(string email);
+    User GetUserById(int id);
     bool AddUser(User user);
 }

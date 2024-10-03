@@ -1,6 +1,4 @@
 using Logic.Utilities;
-using Resources.Interfaces;
-using Resources.Models;
 
 namespace Logic;
 
