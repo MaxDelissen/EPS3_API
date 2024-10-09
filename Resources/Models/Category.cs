@@ -8,5 +8,5 @@ public class Category
     public string Name { get; set; }
 
     // Navigation properties
-    public ICollection<ProductCategory> ProductCategories { get; set; }
+    public List<ProductCategory> ProductCategories { get; set; }
 }

@@ -24,5 +24,5 @@ public class Address
 
     // Navigation properties
     public User User { get; set; }
-    public ICollection<Order> Orders { get; set; }
+    public List<Order> Orders { get; set; }
 }

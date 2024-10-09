@@ -18,7 +18,7 @@ public class Product
     public int Stock { get; set; }
 
     // Navigation properties
-    public ICollection<ProductImage> ProductImages { get; set; }
-    public ICollection<OrderItem> OrderItems { get; set; }
-    public ICollection<ProductCategory> ProductCategories { get; set; }
+    public List<ProductImage> ProductImages { get; set; }
+    public List<OrderItem> OrderItems { get; set; }
+    public List<ProductCategory> ProductCategories { get; set; }
 }

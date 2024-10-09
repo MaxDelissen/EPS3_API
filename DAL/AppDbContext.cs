@@ -16,7 +16,16 @@ namespace DAL
         {
             optionsBuilder.UseMySQL(_connectionString);
         }
-        
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Configuring Product entity relationships
+            modelBuilder.Entity<Product>()
+                .Navigation(p => p.ProductImages).AutoInclude();
+            modelBuilder.Entity<Product>()
+                .Navigation(p => p.ProductCategories).AutoInclude();
+        }
+
         public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }

@@ -14,6 +14,6 @@ public class User
     public bool IsSeller { get; set; }
 
     // Navigation properties
-    public ICollection<Order> Orders { get; set; }
-    public ICollection<Address> Addresses { get; set; }
+    public List<Order> Orders { get; set; }
+    public List<Address> Addresses { get; set; }
 }

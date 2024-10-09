@@ -22,6 +22,6 @@ public class Order
     // Navigation properties
     public User User { get; set; }
     public Address ShippingAddress { get; set; }
-    public ICollection<OrderItem> OrderItems { get; set; }
-    public ICollection<OrderStatusHistory> OrderStatusHistories { get; set; }
+    public List<OrderItem> OrderItems { get; set; }
+    public List<OrderStatusHistory> OrderStatusHistories { get; set; }
 }
