@@ -4,15 +4,15 @@ public class OrderStatusHistory
 {
     public int Id { get; set; }
 
-    [Required]
     public int OrderId { get; set; }
+    [ForeignKey("OrderId")]
+    [JsonIgnore]
+    public Order Order { get; set; }
 
-    [Required]
     public byte Status { get; set; }
 
-    [Required]
     public DateTime UpdatedAt { get; set; }
 
     // Navigation properties
-    public Order Order { get; set; }
+
 }

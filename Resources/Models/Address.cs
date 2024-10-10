@@ -4,8 +4,10 @@ public class Address
 {
     public int Id { get; set; }
 
-    [Required]
     public int UserId { get; set; }
+    [ForeignKey("UserId")]
+    [JsonIgnore]
+    public User User { get; set; }
 
     [StringLength(255)]
     public string Street { get; set; }
@@ -23,6 +25,6 @@ public class Address
     public string Country { get; set; }
 
     // Navigation properties
-    public User User { get; set; }
+
     public List<Order> Orders { get; set; }
 }

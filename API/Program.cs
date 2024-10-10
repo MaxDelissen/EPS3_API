@@ -17,10 +17,11 @@ namespace API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddControllers().AddJsonOptions(options =>
+            /*builder.Services.AddControllers().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-            });
+            });*/
+            builder.Services.AddControllers();
 
             //DI
             builder.Services.AddScoped<IUserRepository, UserRepository>();

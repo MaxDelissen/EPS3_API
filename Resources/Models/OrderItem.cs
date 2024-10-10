@@ -4,19 +4,21 @@ public class OrderItem
 {
     public int Id { get; set; }
 
-    [Required]
     public int OrderId { get; set; }
+    [ForeignKey("OrderId")]
+    [JsonIgnore]
+    public Order Order { get; set; }
 
-    [Required]
     public int ProductId { get; set; }
+    [ForeignKey("ProductId")]
+    [JsonIgnore]
+    public Product Product { get; set; }
 
-    [Required]
     public int Quantity { get; set; }
 
-    [Required]
     public decimal Price { get; set; } // Price at the time of order
 
     // Navigation properties
-    public Order Order { get; set; }
-    public Product Product { get; set; }
+
+
 }
