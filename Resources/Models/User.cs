@@ -3,6 +3,9 @@ namespace Resources.Models;
 public class User : Entity
 {
     [StringLength(45)]
+    public string FullName { get; set; }
+
+    [StringLength(45)]
     public string Email { get; set; }
 
     [StringLength(255)]
