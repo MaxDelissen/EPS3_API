@@ -81,7 +81,7 @@ public class AuthController : Controller
         }
 
         var authService = new AuthService(_userRepository);
-        var registerResponse = authService.RegisterUser(registerRequest.Email, registerRequest.Password, registerRequest.IsSeller);
+        var registerResponse = authService.RegisterUser(registerRequest.FullName, registerRequest.Email, registerRequest.Password, registerRequest.IsSeller);
 
         return registerResponse.Result switch
         {
@@ -118,6 +118,9 @@ public class LoginRequestDto
 /// </summary>
 public class RegisterRequestDto
 {
+    [Required]
+    public string FullName { get; set; }
+
     [Required]
     public string Email { get; set; }
     [Required]

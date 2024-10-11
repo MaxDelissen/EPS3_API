@@ -24,21 +24,22 @@ public class AuthService
         return token;
     }
 
-    public RegisterResponse RegisterUser(string registerRequestEmail, string registerRequestPassword, bool registerRequestIsSeller)
+    public RegisterResponse RegisterUser(string fullName, string email, string password, bool isSeller)
     {
-        if (userRepository.EmailExists(registerRequestEmail))
+        if (userRepository.EmailExists(email))
             return new RegisterResponse { Result = RegisterResult.EmailInUse };
 
-        string passwordHash = registerRequestPassword.HashPassword();
+        string passwordHash = password.HashPassword();
         User newUser = new User
         {
-            Email = registerRequestEmail,
+            FullName = fullName,
+            Email = email,
             PasswordHash = passwordHash,
-            IsSeller = registerRequestIsSeller
+            IsSeller = isSeller
         };
         userRepository.AddUser(newUser);
 
-        bool userAdded = userRepository.EmailExists(registerRequestEmail);
+        bool userAdded = userRepository.EmailExists(email);
         string token = JwtGenerator.GenerateToken(newUser.Id, newUser.Email, newUser.IsSeller);
         return new RegisterResponse
         {

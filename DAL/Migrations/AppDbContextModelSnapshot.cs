@@ -239,6 +239,11 @@ namespace DAL.Migrations
                         .HasMaxLength(45)
                         .HasColumnType("varchar(45)");
 
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(45)
+                        .HasColumnType("varchar(45)");
+
                     b.Property<bool>("IsSeller")
                         .HasColumnType("tinyint(1)");
 

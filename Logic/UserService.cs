@@ -8,7 +8,7 @@ namespace Logic
             try
             {
                 User requestedUser = userRepository.GetUserById(id);
-                return requestedUser.Email; //TODO: Change to return name, name is not yet in the User model
+                return requestedUser.FullName;
             }
             catch (InvalidOperationException e)
             {
