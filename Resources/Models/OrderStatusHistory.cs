@@ -1,9 +1,7 @@
 namespace Resources.Models;
 
-public class OrderStatusHistory
+public class OrderStatusHistory : Entity
 {
-    public int Id { get; set; }
-
     public int OrderId { get; set; }
     [ForeignKey("OrderId")]
     [JsonIgnore]

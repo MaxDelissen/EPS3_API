@@ -1,17 +1,18 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Resources.Interfaces;
+using Resources.Interfaces.IRepository;
 using Resources.Models;
 
 namespace DAL;
 
-public class UserRepository : IUserRepository
+public class UserRepository : DirectDbRepository<User>, IUserRepository
 {
-    private AppDbContext _context;
+    private readonly AppDbContext _context;
 
-    public UserRepository(IConfiguration configuration)
+    public UserRepository(AppDbContext context) : base(context)
     {
-        _context = new AppDbContext(new AppConfiguration(configuration));
+        _context = context;
     }
 
     public List<User> GetUsers() => _context.Users.ToList();

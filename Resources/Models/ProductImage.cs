@@ -1,9 +1,7 @@
 namespace Resources.Models;
 
-public class ProductImage
+public class ProductImage : Entity
 {
-    public int Id { get; set; }
-
     public int ProductId { get; set; }
     [ForeignKey("ProductId")]
     [JsonIgnore]

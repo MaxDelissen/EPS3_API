@@ -1,6 +1,6 @@
 using Resources.Models;
 
-namespace Resources.Interfaces;
+namespace Resources.Interfaces.IRepository;
 
 public interface IUserRepository
 {

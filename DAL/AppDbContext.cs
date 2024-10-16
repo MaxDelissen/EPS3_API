@@ -3,29 +3,8 @@ using Resources.Models;
 
 namespace DAL
 {
-    //dotnet ef migrations add {Name} --project DAL --startup-project API //Replace {Name} with the name of the migration
-    public class AppDbContext : DbContext
+    public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
     {
-        private readonly string _connectionString;
-        public AppDbContext(AppConfiguration appConfiguration)
-        {
-            _connectionString = appConfiguration.GetConnectionString();
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseMySQL(_connectionString);
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            // Configuring Product entity relationships
-            modelBuilder.Entity<Product>()
-                .Navigation(p => p.ProductImages).AutoInclude();
-            modelBuilder.Entity<Product>()
-                .Navigation(p => p.ProductCategories).AutoInclude();
-        }
-
         public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
@@ -35,5 +14,14 @@ namespace DAL
         public DbSet<OrderStatusHistory> OrderStatusHistories { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Configuring Product entity relationships
+            modelBuilder.Entity<Product>()
+                .Navigation(p => p.ProductImages).AutoInclude();
+            modelBuilder.Entity<Product>()
+                .Navigation(p => p.ProductCategories).AutoInclude();
+        }
     }
 }

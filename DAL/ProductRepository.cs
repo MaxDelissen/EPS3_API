@@ -1,16 +1,17 @@
 using Microsoft.Extensions.Configuration;
 using Resources.Interfaces;
+using Resources.Interfaces.IRepository;
 using Resources.Models;
 
 namespace DAL;
 
-public class ProductRepository : IProductRepository
+public class ProductRepository : DirectDbRepository<Product>, IProductRepository
 {
-    private AppDbContext _context;
+    private readonly AppDbContext _context;
 
-    public ProductRepository(IConfiguration configuration)
+    public ProductRepository(AppDbContext context) : base(context)
     {
-        _context = new AppDbContext(new AppConfiguration(configuration));
+        _context = context;
     }
 
     public List<Product> GetAllProducts() => _context.Products.ToList();

@@ -1,9 +1,7 @@
 namespace Resources.Models;
 
-public class Address
+public class Address : Entity
 {
-    public int Id { get; set; }
-
     public int UserId { get; set; }
     [ForeignKey("UserId")]
     [JsonIgnore]

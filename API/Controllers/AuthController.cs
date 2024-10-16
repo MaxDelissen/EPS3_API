@@ -1,8 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using DAL;
-using Logic;
-using Microsoft.AspNetCore.Mvc;
 using Resources.Interfaces;
+using Resources.Interfaces.IRepository;
 
 namespace API.Controllers;
 

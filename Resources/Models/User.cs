@@ -1,8 +1,9 @@
 namespace Resources.Models;
 
-public class User
+public class User : Entity
 {
-    public int Id { get; set; }
+    [StringLength(45)]
+    public string FullName { get; set; }
 
     [StringLength(45)]
     public string FullName { get; set; }

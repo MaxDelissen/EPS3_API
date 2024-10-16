@@ -1,3 +1,5 @@
+using Resources.Interfaces.IRepository;
+
 using System.Data;
 using Resources.Exceptions;
 
@@ -42,5 +44,10 @@ public class ProductService(IProductRepository productRepository)
         if (product.Stock < 0)
             throw new FormatException("Stock can't be negative");
         return true;
+    }
+
+    public Product GetProductById(int id)
+    {
+        return _productRepository.GetWhere(p => p.Id == id).FirstOrDefault();
     }
 }
