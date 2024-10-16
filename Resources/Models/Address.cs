@@ -14,10 +14,10 @@ public class Address : Entity
     public string City { get; set; }
 
     [StringLength(255)]
-    public string State { get; set; }
+    public string? State { get; set; }
 
     [StringLength(20)]
-    public string PostalCode { get; set; }
+    public string? PostalCode { get; set; }
 
     [StringLength(255)]
     public string Country { get; set; }

@@ -2,17 +2,23 @@ namespace Resources.Models;
 
 public class Product : Entity
 {
+    private decimal _price;
+
     [StringLength(255)]
     public string Title { get; set; }
 
     public string Description { get; set; }
 
-    public decimal Price { get; set; }
+    public decimal Price
+    {
+        get => _price;
+        set => _price = Math.Round(value, 2);
+    }
 
     [StringLength(255)]
     public string ThumbnailImage { get; set; }
 
-    public int Stock { get; set; }
+    public int? Stock { get; set; }
 
     // Navigation properties
     public List<ProductImage> ProductImages { get; set; }

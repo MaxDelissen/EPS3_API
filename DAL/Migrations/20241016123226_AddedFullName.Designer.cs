@@ -4,6 +4,7 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241016123226_AddedFullName")]
+    partial class AddedFullName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,10 +44,12 @@ namespace DAL.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("PostalCode")
+                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
 
                     b.Property<string>("State")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
@@ -60,7 +65,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Addresses", (string)null);
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("Resources.Models.Category", b =>
@@ -78,7 +83,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Resources.Models.Order", b =>
@@ -110,7 +115,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Resources.Models.OrderItem", b =>
@@ -139,7 +144,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItems", (string)null);
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("Resources.Models.OrderStatusHistory", b =>
@@ -163,7 +168,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderStatusHistories", (string)null);
+                    b.ToTable("OrderStatusHistories");
                 });
 
             modelBuilder.Entity("Resources.Models.Product", b =>
@@ -181,7 +186,7 @@ namespace DAL.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(65,30)");
 
-                    b.Property<int?>("Stock")
+                    b.Property<int>("Stock")
                         .HasColumnType("int");
 
                     b.Property<string>("ThumbnailImage")
@@ -196,7 +201,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Resources.Models.ProductCategory", b =>
@@ -219,7 +224,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductCategories", (string)null);
+                    b.ToTable("ProductCategories");
                 });
 
             modelBuilder.Entity("Resources.Models.ProductImage", b =>
@@ -242,7 +247,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImages", (string)null);
+                    b.ToTable("ProductImages");
                 });
 
             modelBuilder.Entity("Resources.Models.User", b =>
@@ -273,7 +278,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Resources.Models.Address", b =>

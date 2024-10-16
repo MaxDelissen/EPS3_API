@@ -7,7 +7,7 @@ public class Order : Entity
     [JsonIgnore]
     public User User { get; set; }
 
-    public OrderStatus Status { get; set; } = OrderStatus.Pending;
+    public OrderStatus Status { get; set; }
 
     public DateTime CreatedAt { get; set; }
 
