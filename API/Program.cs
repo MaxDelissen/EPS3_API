@@ -20,10 +20,10 @@ namespace API
             builder.Services.AddControllers();
 
             //DI
-            /*builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<UserService>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
-            builder.Services.AddScoped<ProductService>();*/
+            builder.Services.AddScoped<ProductService>();
 
             builder.Services.AddDbContext<AppDbContext>(options =>
             {
