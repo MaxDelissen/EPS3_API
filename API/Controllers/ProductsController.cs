@@ -9,14 +9,21 @@ namespace API.Controllers;
 
 [ApiController]
 [Route("/api/[controller]")]
-public class ProductsController(ProductService productService) : Controller
+public class ProductsController : Controller
 {
+    private readonly ProductService _productService;
+
+    public ProductsController(ProductService productService)
+    {
+        _productService = productService;
+    }
+
     [HttpGet]
     public IActionResult Get()
     {
         try
         {
-            var products = productService.GetProduct();
+            var products = _productService.GetProduct();
             return products == null || products.Count == 0 ? NotFound() : Ok(products);
         }
         catch (Exception e)
@@ -28,15 +35,10 @@ public class ProductsController(ProductService productService) : Controller
     [HttpGet("{id}")]
     public IActionResult Get(int id)
     {
-        try
-        {
-            Product? product = productService.GetProduct(id).FirstOrDefault();
-            return product == null ? NotFound() : Ok(product);
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, e.Message);
-        }
+        var product = _productService.GetProductById(id);
+        if (product == null)
+            return NotFound();
+        return Ok(product);
     }
 
     [HttpPost]
@@ -60,7 +62,7 @@ public class ProductsController(ProductService productService) : Controller
                                            //I'm not sure if that's a good thing...
                                            //I'm not sure either... I should probably stop...
             };
-            productService.AddProduct(newProduct);
+            _productService.AddProduct(newProduct);
             return Ok();
         }
         catch (InvalidLenghtException e) { return BadRequest(e.Message); }
