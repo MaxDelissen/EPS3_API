@@ -1,10 +1,7 @@
 namespace Resources.Models;
 
-public class ProductCategory
+public class ProductCategory : Entity
 {
-    [Key]
-    public int Id { get; set; } // Define primary key
-
     public int ProductId { get; set; }
     [ForeignKey("ProductId")]
     [JsonIgnore]
@@ -15,6 +12,4 @@ public class ProductCategory
     [JsonIgnore]
     public Category Category { get; set; }
     // Navigation properties
-
-
 }

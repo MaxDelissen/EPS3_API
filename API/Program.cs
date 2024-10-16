@@ -2,12 +2,11 @@ using System.Reflection;
 using DAL;
 using Logic.Utilities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.Text.Json.Serialization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using Logic;
-using Resources.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using Resources.Interfaces.IRepository;
 
 namespace API
 {
@@ -17,17 +16,22 @@ namespace API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            /*builder.Services.AddControllers().AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-            });*/
+
             builder.Services.AddControllers();
 
             //DI
-            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            /*builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<UserService>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
-            builder.Services.AddScoped<ProductService>();
+            builder.Services.AddScoped<ProductService>();*/
+
+            builder.Services.AddDbContext<AppDbContext>(options =>
+            {
+                options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), ServerVersion.Parse("10.11.8-mariadb"));
+                options.EnableSensitiveDataLogging(); // Let op: alleen voor ontwikkelomgevingen
+            });
+
+
 
             #region CORS Setup
 
@@ -41,18 +45,6 @@ namespace API
                         .AllowAnyHeader();
                 });
             });
-
-            #endregion
-
-            #region Configuration Setup
-
-            // Add configuration setup
-            var configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .Build();
-
-            builder.Services.AddSingleton(configuration);
-            builder.Services.AddSingleton<AppConfiguration>();
 
             #endregion
 

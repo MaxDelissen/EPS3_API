@@ -1,9 +1,7 @@
 namespace Resources.Models;
 
-public class Product
+public class Product : Entity
 {
-    public int Id { get; set; }
-
     [StringLength(255)]
     public string Title { get; set; }
 

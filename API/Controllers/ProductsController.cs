@@ -1,6 +1,3 @@
-using Logic;
-using Microsoft.AspNetCore.Mvc;
-
 namespace API.Controllers;
 
 [ApiController]
@@ -18,6 +15,15 @@ public class ProductsController : Controller
     public IActionResult Get()
     {
         return Ok(_productService.GetProducts());
+    }
+
+    [HttpGet("{id}")]
+    public IActionResult Get(int id)
+    {
+        var product = _productService.GetProductById(id);
+        if (product == null)
+            return NotFound();
+        return Ok(product);
     }
 
 }

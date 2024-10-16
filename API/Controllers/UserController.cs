@@ -1,7 +1,5 @@
 using System.Security.Claims;
-using Logic;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
@@ -20,7 +18,7 @@ public class UserController : Controller
     public IActionResult Get()
     {
         //Function
-        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        string? userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (userId == null)
             return Unauthorized();
         string? userName = _userService.GetUserNameById(int.Parse(userId));
