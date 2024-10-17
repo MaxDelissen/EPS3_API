@@ -1,5 +1,3 @@
-using Resources.Models;
-
 namespace Resources.Interfaces.IRepository;
 
 public interface IUserRepository

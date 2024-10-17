@@ -1,14 +1,12 @@
 using System.Security.Claims;
-using API.DTOs;
+using Resources.DTOs;
 
 namespace API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ShoppingController : Controller
+public class ShoppingController(ShoppingService shoppingService) : Controller
 {
-    private readonly ShoppingService _shoppingService;
-
     [HttpPost("Add")]
     public IActionResult AddToCart([FromBody] AddToCartRequest request)
     {
@@ -17,7 +15,7 @@ public class ShoppingController : Controller
             return Unauthorized();
 
         try {
-            _shoppingService.AddToCart(int.Parse(userId), request.ProductId, request.Quantity);
+            shoppingService.AddToCart(int.Parse(userId), request.ProductId, request.Quantity);
             return Ok();
         } catch (Exception e) {
             return BadRequest(e.Message);

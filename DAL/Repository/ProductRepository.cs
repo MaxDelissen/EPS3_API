@@ -1,9 +1,4 @@
-using Microsoft.Extensions.Configuration;
-using Resources.Interfaces;
-using Resources.Interfaces.IRepository;
-using Resources.Models;
-
-namespace DAL;
+namespace DAL.Repository;
 
 public class ProductRepository : DirectDbRepository<Product>, IProductRepository
 {

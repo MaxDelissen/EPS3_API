@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Resources.Models;
 
 namespace DAL
 {
@@ -26,16 +25,6 @@ namespace DAL
 
             modelBuilder.Entity<Order>().Property(o => o.Status)
                 .HasConversion<string>();
-            modelBuilder.Entity<Order>()
-                .Property(o => o.CreatedAt)
-                .HasDefaultValueSql("GETUTCDATE()");
-            modelBuilder.Entity<Order>()
-                .Property(o => o.UpdatedAt)
-                .HasDefaultValueSql("GETUTCDATE()");
-
-            modelBuilder.Entity<OrderStatusHistory>()
-                .Property(o => o.UpdatedAt)
-                .HasDefaultValueSql("GETUTCDATE()");
 
             modelBuilder.Entity<OrderItem>()
                 .Property(o => o.Quantity).HasDefaultValue(1);

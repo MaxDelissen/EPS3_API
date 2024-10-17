@@ -1,7 +1,7 @@
 using System.Data;
-using API.DTOs;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
+using Resources.DTOs;
 using Resources.Exceptions;
 using Resources.Models;
 

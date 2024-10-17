@@ -1,6 +1,6 @@
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Resources.Interfaces;
-using Resources.Models;
 
 namespace DAL;
 
@@ -29,7 +29,7 @@ public class DirectDbRepository<E> : IDirectDbRepository<E> where E : Entity
 
     public List<E> GetAll() => _dbSet.ToList();
 
-    public List<E> GetWhere(Func<E, bool> where) => _dbSet.Where(where).ToList();
+    public List<E> GetWhere(Expression<Func<E, bool>> where) => _dbSet.Where(where).ToList();
 
     public void Update(E entity)
     {

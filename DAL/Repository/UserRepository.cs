@@ -1,10 +1,4 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Resources.Interfaces;
-using Resources.Interfaces.IRepository;
-using Resources.Models;
-
-namespace DAL;
+namespace DAL.Repository;
 
 public class UserRepository : DirectDbRepository<User>, IUserRepository
 {

@@ -13,9 +13,9 @@ public class Order : Entity
 
     public DateTime UpdatedAt { get; set; }
 
-    public int ShippingAddressId { get; set; }
+    public int? ShippingAddressId { get; set; }
     [ForeignKey("ShippingAddressId")]
-    public Address ShippingAddress { get; set; }
+    public Address? ShippingAddress { get; set; }
 
     // Navigation properties
     public List<OrderItem> OrderItems { get; set; }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using DAL.Repository;
 using Microsoft.EntityFrameworkCore;
 using Resources.Interfaces.IRepository;
 
@@ -21,9 +22,13 @@ namespace API
 
             //DI
             builder.Services.AddScoped<IUserRepository, UserRepository>();
-            builder.Services.AddScoped<UserService>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
+            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+            builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+            builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+            builder.Services.AddScoped<UserService>();
             builder.Services.AddScoped<ProductService>();
+            builder.Services.AddScoped<ShoppingService>();
 
             builder.Services.AddDbContext<AppDbContext>(options =>
             {
