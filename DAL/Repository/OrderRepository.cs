@@ -20,7 +20,7 @@ public class OrderRepository : DirectDbRepository<Order>, IOrderRepository
             Status = cart.Status,
             CreatedAt = cart.CreatedAt,
             UpdatedAt = cart.UpdatedAt,
-            ShippingAddressId = cart.ShippingAddressId
+            //ShippingAddressId = cart.ShippingAddressId
         };
         _context.Orders.Add(newCart);
         return _context.SaveChanges();

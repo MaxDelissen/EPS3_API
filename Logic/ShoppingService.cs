@@ -28,9 +28,9 @@ public class ShoppingService
         quantity = CheckQuantity(quantity);
 
         var activeOrders = GetActiveOrders(userId);
-        bool cartCreated = false;
-        var cart = activeOrders.FirstOrDefault() ?? CreateNewCart(userId, out cartCreated);
-        var orderItem = !cartCreated ? cart.OrderItems.FirstOrDefault(oi => oi.ProductId == productId) : null;
+        var cartCreated = false;
+        Order cart = activeOrders.FirstOrDefault() ?? CreateNewCart(userId, out cartCreated);
+        OrderItem? orderItem = !cartCreated ? cart.OrderItems.FirstOrDefault(oi => oi.ProductId == productId) : null;
 
         if (orderItem != null)
         {
@@ -47,7 +47,7 @@ public class ShoppingService
                 Quantity = quantity.Value,
                 Price = product.Price
             };
-            cart.OrderItems.Add(newOrderItem);
+            cart.OrderItems.Add(newOrderItem); //Error here!
             _orderItemRepository.Create(newOrderItem);
         }
         _orderRepository.Update(cart);

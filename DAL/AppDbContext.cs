@@ -25,6 +25,8 @@ namespace DAL
 
             modelBuilder.Entity<Order>().Property(o => o.Status)
                 .HasConversion<string>();
+            modelBuilder.Entity<Order>()
+                .Navigation(o => o.OrderItems).AutoInclude();
 
             modelBuilder.Entity<OrderItem>()
                 .Property(o => o.Quantity).HasDefaultValue(1);
