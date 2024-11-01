@@ -51,4 +51,9 @@ public class ProductService(IProductRepository productRepository)
     {
         return _productRepository.GetWhere(p => p.Id == id).FirstOrDefault();
     }
+
+    public List<Product> GetProductByTitle(string title)
+    {
+        return _productRepository.GetWhere(p => p.Title.Contains(title)).ToList();
+    }
 }
