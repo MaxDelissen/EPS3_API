@@ -41,6 +41,20 @@ public class ProductsController : Controller
         return Ok(product);
     }
 
+    [HttpGet("Search")]
+    public IActionResult Search([FromQuery] string query)
+    {
+        try
+        {
+            var products = _productService.GetProductByTitle(query);
+            return products == null || products.Count == 0 ? NotFound() : Ok(products);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+
     [HttpPost]
     public IActionResult Post([FromBody] ProductDto product) //Not yet implemented in frontend
     {
@@ -52,15 +66,7 @@ public class ProductsController : Controller
                 Description = product.Description ?? "",
                 Price = product.Price,
                 ThumbnailImage = product.ThumbnailImage,
-                Stock = product.Stock ?? 0 //Why does "??" look so funny to me? Like a confused smiley?
-                                           //Or someone asking like product.Stock wháááát????
-                                           //Maybe I didn't get enough sleep last night...
-                                           //Should probably remove this comment before submitting...
-                                           //Hey copilot, how ya doing with my autocompletes?
-                                           //I'm doing great! I'm just a computer program, I don't need sleep!
-                                           //Noice. Now im having conversations with the autocomoplete...
-                                           //I'm not sure if that's a good thing...
-                                           //I'm not sure either... I should probably stop...
+                Stock = product.Stock ?? 0
             };
             _productService.AddProduct(newProduct);
             return Ok();
