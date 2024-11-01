@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Resources;
 using Resources.DTOs;
+using Resources.Exceptions;
 
 namespace Logic;
 
@@ -88,6 +89,104 @@ public class ShoppingService
     private void IncreaseItemQuantity(int quantity, OrderItem orderItem)
     {
         orderItem.Quantity += quantity;
+        _orderItemRepository.Update(orderItem);
+    }
+
+    private void DecreaseItemQuantity(int quantity, OrderItem orderItem)
+    {
+        orderItem.Quantity -= quantity;
+        if (orderItem.Quantity <= 0)
+        {
+            DeleteOrderItem(orderItem);
+        }
+        else
+        {
+            _orderItemRepository.Update(orderItem);
+        }
+    }
+
+    private void DeleteOrderItem(OrderItem orderItem)
+    {
+        _orderItemRepository.Delete(orderItem);
+    }
+
+    private Order GetUserCart(int userId)
+    {
+        var activeOrders = GetActiveOrders(userId);
+        Order? cart = activeOrders.FirstOrDefault();
+        if (cart == null)
+            throw new InvalidOperationException("User has no active cart");
+        return cart;
+    }
+
+    public Product GetProductFromCart(int userId, int productId)
+    {
+        Order cart = GetUserCart(userId);
+        OrderItem? orderItem = cart.OrderItems.FirstOrDefault(oi => oi.ProductId == productId);
+        if (orderItem == null)
+            throw new ProductNotAvailableException("Product not in cart");
+
+        return _productRepository.GetWhere(p => p.Id == orderItem.ProductId).FirstOrDefault()
+               ?? throw new ProductNotAvailableException("Product in cart is no longer available");
+    }
+
+    public List<OrderProductDto> GetCart(int userId)
+    {
+        //Get user's active cart (Should only be one)
+        //Get all order items in the cart
+        //Get product details for each order item
+        //Transform to products to OrderProductDto
+        //Return all OrderProductDto
+        List<OrderProductDto> orderProducts = new();
+
+        var activeOrders = GetActiveOrders(userId);
+        Order? cart = GetUserCart(userId);
+        if (cart == null)
+            return orderProducts; //Empty cart
+
+        foreach (OrderItem cartOrderItem in cart.OrderItems)
+        {
+            var product = _productRepository.GetWhere(p => p.Id == cartOrderItem.ProductId).FirstOrDefault();
+            if (product == null)
+                throw new ProductNotAvailableException("Product in cart is no longer available");
+
+            orderProducts.Add(new OrderProductDto
+            {
+                Id = product.Id,
+                Title = product.Title,
+                Description = product.Description,
+                Price = product.Price,
+                ThumbnailImage = product.ThumbnailImage,
+                Quantity = cartOrderItem.Quantity
+            });
+        }
+
+        return orderProducts;
+    }
+
+    public void RemoveFromCart(int userId, int productId)
+    {
+        Order cart = GetUserCart(userId);
+
+        OrderItem? orderItem = cart.OrderItems.FirstOrDefault(oi => oi.ProductId == productId);
+        if (orderItem == null)
+            throw new ProductNotAvailableException("Product not in cart");
+
+        cart.OrderItems.Remove(orderItem);
+        _orderItemRepository.Delete(orderItem);
+        _orderRepository.Update(cart);
+    }
+
+    public void EditProductQuantity(int userId, int productId, int? quantity)
+    {
+        Order cart = GetUserCart(userId);
+        OrderItem? orderItem = cart.OrderItems.FirstOrDefault(oi => oi.ProductId == productId);
+
+        if (orderItem == null)
+            throw new ProductNotAvailableException("Product not in cart");
+
+        quantity = CheckQuantity(quantity);
+        orderItem.Quantity = quantity.Value;
         _orderItemRepository.Update(orderItem);
     }
 }
