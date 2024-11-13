@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using Resources.DTOs;
+using Resources.Models.DbModels;
 
 namespace DAL.Repository;
 

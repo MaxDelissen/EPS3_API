@@ -1,4 +1,5 @@
 using Resources.DTOs;
+using Resources.Models.DbModels;
 
 namespace Resources.Interfaces.IRepository;
 

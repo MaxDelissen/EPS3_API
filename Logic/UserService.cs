@@ -1,5 +1,7 @@
 // Ensure UserService has a constructor that accepts an IUserRepository parameter
 
+using Resources.Models.DbModels;
+
 namespace Logic
 {
     public class UserService(IUserRepository userRepository)

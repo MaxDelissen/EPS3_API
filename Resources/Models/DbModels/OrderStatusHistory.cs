@@ -1,4 +1,4 @@
-namespace Resources.Models;
+namespace Resources.Models.DbModels;
 
 public class OrderStatusHistory : Entity
 {

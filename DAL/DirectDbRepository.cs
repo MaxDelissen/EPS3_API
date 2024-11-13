@@ -1,6 +1,7 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Resources.Interfaces;
+using Resources.Models.DbModels;
 
 namespace DAL;
 
