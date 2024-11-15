@@ -3,10 +3,10 @@ name: CI/CD Pipeline for Backend
 on:
   push:
     branches:
-      - main
+      - main  # Only deploy on push to main branch
   pull_request:
     branches:
-      - main
+      - main  # Run tests on PR to main branch
 
 jobs:
   build-and-test:
@@ -33,6 +33,7 @@ jobs:
   deploy:
     runs-on: windows-latest
     needs: build-and-test
+    if: github.event_name == 'push'  # Only run deploy on push to main
 
     steps:
     - name: Checkout Code
