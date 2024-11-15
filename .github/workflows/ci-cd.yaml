@@ -37,7 +37,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: .net-app
-        path: ${{env.DOTNET_ROOT}}/myapp  # Upload the published artifacts
+        path: ${{env.DOTNET_ROOT}}\myapp  # Upload the published artifacts
 
   deploy:
     permissions:
@@ -58,4 +58,4 @@ jobs:
         with:
           app-name: Backend-EPS3  # Your Azure Web App name
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: ${{env.DOTNET_ROOT}}/myapp  # Path to the published artifact
+          package: ${{env.DOTNET_ROOT}}\myapp  # Path to the published artifact
