@@ -24,7 +24,11 @@ public class ProductsController : Controller
         try
         {
             var products = _productService.GetProduct();
-            return products == null || products.Count == 0 ? NotFound() : Ok(products);
+            return products.Count == 0 ? NotFound() : Ok(products);
+        }
+        catch (DataException e)
+        {
+            return StatusCode(404, e.Message);
         }
         catch (Exception e)
         {
@@ -76,5 +80,38 @@ public class ProductsController : Controller
         catch (FormatException e) { return BadRequest(e.Message); }
         catch (DataException e) { return StatusCode(500, e.Message); }
         catch (Exception e) { return StatusCode(500, e.Message); }
+    }
+
+    [HttpGet("stock/{id}")]
+    public IActionResult GetStock(int id)
+    {
+        try
+        {
+            var stock = _productService.GetStock(id);
+            if (stock == null)
+                return NotFound();
+            return Ok(stock);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
+    {
+        try
+        {
+            var product = _productService.GetProductById(id);
+            if (product == null)
+                return NotFound();
+            _productService.DeleteProduct(product);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
     }
 }

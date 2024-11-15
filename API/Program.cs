@@ -32,8 +32,9 @@ namespace API
 
             builder.Services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), ServerVersion.Parse("10.11.8-mariadb"));
-                options.EnableSensitiveDataLogging(); // Let op: alleen voor ontwikkelomgevingen
+                var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
+                                       Environment.GetEnvironmentVariable("DefaultConnection");
+                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
             });
 
 
@@ -45,7 +46,11 @@ namespace API
             {
                 options.AddPolicy("AllowReactApp", policy =>
                 {
-                    policy.WithOrigins("http://localhost:3000")
+                    policy.WithOrigins(
+                        "http://localhost:3000",
+                        "https://eps-3-frontend.vercel.app/",
+                        "https://eps-3-frontend-maxdelissens-projects.vercel.app/"
+                        )
                         .AllowAnyMethod()
                         .AllowAnyHeader();
                 });

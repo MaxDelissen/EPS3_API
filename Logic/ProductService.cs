@@ -11,7 +11,7 @@ public class ProductService(IProductRepository productRepository)
     {
         if (id == null)
             return _productRepository.GetAll();
-        return [_productRepository.GetWhere(p => p.Id == id).FirstOrDefault()];
+        return [_productRepository.GetWhere(p => p.Id == id).FirstOrDefault() ?? throw new DataException("Product not found")];
     }
 
     public void AddProduct(Product product)
@@ -47,13 +47,11 @@ public class ProductService(IProductRepository productRepository)
         return true;
     }
 
-    public Product GetProductById(int id)
-    {
-        return _productRepository.GetWhere(p => p.Id == id).FirstOrDefault();
-    }
+    public Product? GetProductById(int id) => _productRepository.GetWhere(p => p.Id == id).FirstOrDefault();
 
-    public List<Product> GetProductByTitle(string title)
-    {
-        return _productRepository.GetWhere(p => p.Title.Contains(title)).ToList();
-    }
+    public List<Product> GetProductByTitle(string title) => _productRepository.GetWhere(p => p.Title.Contains(title)).ToList();
+
+    public int? GetStock(int productId) => _productRepository.GetWhere(p => p.Id == productId).FirstOrDefault()?.Stock;
+
+    public void DeleteProduct(Product product) => _productRepository.Delete(product);
 }
