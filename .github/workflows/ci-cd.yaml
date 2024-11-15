@@ -28,6 +28,12 @@ jobs:
       run: dotnet test --no-restore --verbosity normal
 
     - name: Build the Project
+      run: dotnet build EPS3_API/EPS3_API.csproj --configuration Release
+
+    - name: Publish the Project
+      run: dotnet publish EPS3_API/EPS3_API.csproj --configuration Release --output ./out
+
+    - name: Build the Project
       run: dotnet publish -c Release -o ./out
 
   deploy:
