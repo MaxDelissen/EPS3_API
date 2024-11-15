@@ -1,3 +1,5 @@
+using Resources.Models.DbModels;
+
 namespace Logic;
 
 public class AuthService

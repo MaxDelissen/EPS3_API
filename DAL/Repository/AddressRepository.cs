@@ -1,3 +1,5 @@
+using Resources.Models.DbModels;
+
 namespace DAL.Repository;
 
 public class AddressRepository : DirectDbRepository<Address>, IAddressRepository

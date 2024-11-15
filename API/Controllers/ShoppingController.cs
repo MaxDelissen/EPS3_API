@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Resources.DTOs;
 using Resources.Exceptions;
+using Resources.Models;
 
 namespace API.Controllers;
 
@@ -9,14 +10,13 @@ namespace API.Controllers;
 public class ShoppingController(ShoppingService shoppingService) : Controller
 {
     [HttpPost("Add")]
+    [TokenValidation]
     public IActionResult AddToCart([FromBody] AddToCartRequest request)
     {
-        string? userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (userId == null || !int.TryParse(userId, out _))
-            return Unauthorized();
+        var simpleUser = HttpContext.Items["SimplifiedUser"] as SimpleUser;
 
         try {
-            shoppingService.AddToCart(int.Parse(userId), request.ProductId, request.Quantity);
+            shoppingService.AddToCart(simpleUser.UserId, request.ProductId, request.Quantity);
             return Ok();
         } catch (Exception e) {
             return BadRequest(e.Message);
@@ -24,14 +24,13 @@ public class ShoppingController(ShoppingService shoppingService) : Controller
     }
 
     [HttpPut("Cart")]
+    [TokenValidation]
     public IActionResult EditProductQuantity([FromBody] AddToCartRequest request)
     {
-        string? userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (userId == null || !int.TryParse(userId, out _))
-            return Unauthorized();
+        int userId = (HttpContext.Items["SimplifiedUser"] as SimpleUser).UserId;
 
         try {
-            shoppingService.EditProductQuantity(int.Parse(userId), request.ProductId, request.Quantity);
+            shoppingService.EditProductQuantity(userId, request.ProductId, request.Quantity);
             return Ok();
         } catch (Exception e) {
             return BadRequest(e.Message);
@@ -39,15 +38,14 @@ public class ShoppingController(ShoppingService shoppingService) : Controller
     }
 
     [HttpGet("Cart")]
+    [TokenValidation]
     public IActionResult GetCart()
     {
-        string? userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (userId == null || !int.TryParse(userId, out _))
-            return Unauthorized();
+        int userId = (HttpContext.Items["SimplifiedUser"] as SimpleUser).UserId;
 
         try
         {
-            var cart = shoppingService.GetCart(int.Parse(userId));
+            var cart = shoppingService.GetCart(userId);
             return Ok(cart);
         } catch (ProductNotAvailableException e) {
             return BadRequest(e.Message);
@@ -57,14 +55,13 @@ public class ShoppingController(ShoppingService shoppingService) : Controller
     }
 
     [HttpDelete("Cart/{productId}")]
+    [TokenValidation]
     public IActionResult RemoveFromCart(int productId)
     {
-        string? userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (userId == null || !int.TryParse(userId, out _))
-            return Unauthorized();
+        int userId = (HttpContext.Items["SimplifiedUser"] as SimpleUser).UserId;
 
         try {
-            shoppingService.RemoveFromCart(int.Parse(userId), productId);
+            shoppingService.RemoveFromCart(userId, productId);
             return Ok();
         } catch (Exception e) {
             return BadRequest(e.Message);

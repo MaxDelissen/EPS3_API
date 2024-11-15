@@ -1,5 +1,6 @@
 using System.Data;
 using Resources.Exceptions;
+using Resources.Models.DbModels;
 
 namespace Logic;
 

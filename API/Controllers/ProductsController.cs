@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Resources.DTOs;
 using Resources.Exceptions;
 using Resources.Models;
+using Resources.Models.DbModels;
 
 namespace API.Controllers;
 

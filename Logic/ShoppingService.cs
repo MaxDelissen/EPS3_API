@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Resources;
 using Resources.DTOs;
 using Resources.Exceptions;
+using Resources.Models.DbModels;
 
 namespace Logic;
 

@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using Resources.Models;
 
 namespace API.Controllers;
 
@@ -15,13 +16,11 @@ public class UserController : Controller
     }
 
     [HttpGet]
+    [TokenValidation]
     public IActionResult Get()
     {
-        //Function
-        string? userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (userId == null)
-            return Unauthorized();
-        string? userName = _userService.GetUserNameById(int.Parse(userId));
+        int userId = (HttpContext.Items["SimplifiedUser"] as SimpleUser).UserId;
+        string? userName = _userService.GetUserNameById(userId);
         if (userName == null)
             return NotFound();
         return Ok(userName);
@@ -30,7 +29,6 @@ public class UserController : Controller
     [HttpGet("{id}")]
     public IActionResult Get(int id)
     {
-        //Function
         string? userName = _userService.GetUserNameById(id);
         if (userName == null)
             return NotFound();
