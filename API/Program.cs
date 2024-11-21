@@ -16,6 +16,7 @@ namespace API
         public static void Main(string[] args)
         {
             //Comment to test PR workflow in GitHub TODO: Remove
+            //Extra comment to test PR workflow in GitHub TODO: Remove
 
             var builder = WebApplication.CreateBuilder(args);
 
