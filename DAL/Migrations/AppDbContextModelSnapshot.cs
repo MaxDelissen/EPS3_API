@@ -22,7 +22,7 @@ namespace DAL.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
-            modelBuilder.Entity("Resources.Models.Address", b =>
+            modelBuilder.Entity("Resources.Models.DbModels.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,7 +63,7 @@ namespace DAL.Migrations
                     b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("Resources.Models.Category", b =>
+            modelBuilder.Entity("Resources.Models.DbModels.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -81,7 +81,7 @@ namespace DAL.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("Resources.Models.Order", b =>
+            modelBuilder.Entity("Resources.Models.DbModels.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -91,6 +91,9 @@ namespace DAL.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<int>("SellerId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("ShippingAddressId")
                         .HasColumnType("int");
@@ -114,7 +117,7 @@ namespace DAL.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("Resources.Models.OrderItem", b =>
+            modelBuilder.Entity("Resources.Models.DbModels.OrderItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -145,7 +148,7 @@ namespace DAL.Migrations
                     b.ToTable("OrderItems");
                 });
 
-            modelBuilder.Entity("Resources.Models.OrderStatusHistory", b =>
+            modelBuilder.Entity("Resources.Models.DbModels.OrderStatusHistory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -169,7 +172,7 @@ namespace DAL.Migrations
                     b.ToTable("OrderStatusHistories");
                 });
 
-            modelBuilder.Entity("Resources.Models.Product", b =>
+            modelBuilder.Entity("Resources.Models.DbModels.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -183,6 +186,9 @@ namespace DAL.Migrations
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(65,30)");
+
+                    b.Property<int>("SellerId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("Stock")
                         .HasColumnType("int");
@@ -202,7 +208,7 @@ namespace DAL.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("Resources.Models.ProductCategory", b =>
+            modelBuilder.Entity("Resources.Models.DbModels.ProductCategory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -225,7 +231,7 @@ namespace DAL.Migrations
                     b.ToTable("ProductCategories");
                 });
 
-            modelBuilder.Entity("Resources.Models.ProductImage", b =>
+            modelBuilder.Entity("Resources.Models.DbModels.ProductImage", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -248,7 +254,7 @@ namespace DAL.Migrations
                     b.ToTable("ProductImages");
                 });
 
-            modelBuilder.Entity("Resources.Models.User", b =>
+            modelBuilder.Entity("Resources.Models.DbModels.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -279,9 +285,9 @@ namespace DAL.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Resources.Models.Address", b =>
+            modelBuilder.Entity("Resources.Models.DbModels.Address", b =>
                 {
-                    b.HasOne("Resources.Models.User", "User")
+                    b.HasOne("Resources.Models.DbModels.User", "User")
                         .WithMany("Addresses")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -290,13 +296,13 @@ namespace DAL.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Resources.Models.Order", b =>
+            modelBuilder.Entity("Resources.Models.DbModels.Order", b =>
                 {
-                    b.HasOne("Resources.Models.Address", "ShippingAddress")
+                    b.HasOne("Resources.Models.DbModels.Address", "ShippingAddress")
                         .WithMany("Orders")
                         .HasForeignKey("ShippingAddressId");
 
-                    b.HasOne("Resources.Models.User", "User")
+                    b.HasOne("Resources.Models.DbModels.User", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -307,15 +313,15 @@ namespace DAL.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Resources.Models.OrderItem", b =>
+            modelBuilder.Entity("Resources.Models.DbModels.OrderItem", b =>
                 {
-                    b.HasOne("Resources.Models.Order", "Order")
+                    b.HasOne("Resources.Models.DbModels.Order", "Order")
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Resources.Models.Product", "Product")
+                    b.HasOne("Resources.Models.DbModels.Product", "Product")
                         .WithMany("OrderItems")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -326,9 +332,9 @@ namespace DAL.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Resources.Models.OrderStatusHistory", b =>
+            modelBuilder.Entity("Resources.Models.DbModels.OrderStatusHistory", b =>
                 {
-                    b.HasOne("Resources.Models.Order", "Order")
+                    b.HasOne("Resources.Models.DbModels.Order", "Order")
                         .WithMany("OrderStatusHistories")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -337,15 +343,15 @@ namespace DAL.Migrations
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("Resources.Models.ProductCategory", b =>
+            modelBuilder.Entity("Resources.Models.DbModels.ProductCategory", b =>
                 {
-                    b.HasOne("Resources.Models.Category", "Category")
+                    b.HasOne("Resources.Models.DbModels.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Resources.Models.Product", "Product")
+                    b.HasOne("Resources.Models.DbModels.Product", "Product")
                         .WithMany("ProductCategories")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -356,9 +362,9 @@ namespace DAL.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Resources.Models.ProductImage", b =>
+            modelBuilder.Entity("Resources.Models.DbModels.ProductImage", b =>
                 {
-                    b.HasOne("Resources.Models.Product", "Product")
+                    b.HasOne("Resources.Models.DbModels.Product", "Product")
                         .WithMany("ProductImages")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -367,19 +373,19 @@ namespace DAL.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Resources.Models.Address", b =>
+            modelBuilder.Entity("Resources.Models.DbModels.Address", b =>
                 {
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("Resources.Models.Order", b =>
+            modelBuilder.Entity("Resources.Models.DbModels.Order", b =>
                 {
                     b.Navigation("OrderItems");
 
                     b.Navigation("OrderStatusHistories");
                 });
 
-            modelBuilder.Entity("Resources.Models.Product", b =>
+            modelBuilder.Entity("Resources.Models.DbModels.Product", b =>
                 {
                     b.Navigation("OrderItems");
 
@@ -388,7 +394,7 @@ namespace DAL.Migrations
                     b.Navigation("ProductImages");
                 });
 
-            modelBuilder.Entity("Resources.Models.User", b =>
+            modelBuilder.Entity("Resources.Models.DbModels.User", b =>
                 {
                     b.Navigation("Addresses");
 

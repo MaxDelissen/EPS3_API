@@ -20,6 +20,8 @@ public class Product : Entity
 
     public int? Stock { get; set; }
 
+    public int SellerId { get; set; }
+
     // Navigation properties
     public List<ProductImage> ProductImages { get; set; }
     public List<OrderItem> OrderItems { get; set; }
