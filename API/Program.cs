@@ -47,14 +47,16 @@ namespace API
             {
                 options.AddPolicy("AllowReactApp", policy =>
                 {
-                    /*policy.WithOrigins(
-                        "http://localhost:3000",
-                        "https://eps-3-frontend.vercel.app/",
-                        "https://eps-3-frontend-maxdelissens-projects.vercel.app/"
+                    policy.WithOrigins
+                        (
+                            "http://localhost:3000",
+                            "https://eps-3-frontend.vercel.app/",
+                            "https://eps-3-frontend-maxdelissens-projects.vercel.app/"
                         )
                         .AllowAnyMethod()
-                        .AllowAnyHeader();*/
-                    policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                        .AllowAnyHeader();
+
+                    policy.AllowAnyOrigin().AllowAnyHeader().WithMethods("GET");
                 });
             });
 
