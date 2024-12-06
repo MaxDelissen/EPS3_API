@@ -14,6 +14,8 @@ public class AuthController : Controller
 {
     private readonly IUserRepository _userRepository;
 
+    //Hello world
+
     public AuthController(IUserRepository userRepository)
     {
         _userRepository = userRepository;
