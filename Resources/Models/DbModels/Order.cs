@@ -17,6 +17,8 @@ public class Order : Entity
     [ForeignKey("ShippingAddressId")]
     public Address? ShippingAddress { get; set; }
 
+    public int SellerId { get; set; }
+
     // Navigation properties
     public List<OrderItem> OrderItems { get; set; }
     public List<OrderStatusHistory> OrderStatusHistories { get; set; }

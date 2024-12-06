@@ -1,6 +1,6 @@
 using System.Data;
-using Logic;
-using Microsoft.AspNetCore.Mvc;
+using Logic.Attributes;
+using Resources;
 using Resources.DTOs;
 using Resources.Exceptions;
 using Resources.Models;
@@ -99,6 +99,23 @@ public class ProductsController : Controller
         }
     }
 
+    [HttpPut("{id}/stock/{stock}")]
+    public  IActionResult UpdateStock(int id, int stock)
+    {
+        try
+        {
+            var product = _productService.GetProductById(id);
+            if (product == null)
+                return NotFound();
+            _productService.UpdateStock(product, stock);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
@@ -114,5 +131,28 @@ public class ProductsController : Controller
         {
             return StatusCode(500, e.Message);
         }
+    }
+
+    [TokenValidation]
+    [HttpGet("seller")]
+    public IActionResult GetSellerProducts()
+    {
+        var simpleUser = HttpContext.Items["SimplifiedUser"] as SimpleUser;
+        if (simpleUser != null && simpleUser.UserRole != UserRole.Seller)
+            return Unauthorized();
+        try
+        {
+            var products = _productService.GetUserProducts(simpleUser!.UserId);
+            return products.Count == 0 ? NotFound() : Ok(products);
+        }
+        catch (DataException e)
+        {
+            return StatusCode(404, e.Message);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+
     }
 }

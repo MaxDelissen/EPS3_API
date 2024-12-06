@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Logic.Attributes;
 using Microsoft.AspNetCore.Authorization;
 using Resources.Models;
 
