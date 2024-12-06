@@ -1,7 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using DAL;
+using Logic.Attributes;
+using Resources;
 using Resources.Interfaces;
 using Resources.Interfaces.IRepository;
+using Resources.Models;
 
 namespace API.Controllers;
 
@@ -91,6 +94,21 @@ public class AuthController : Controller
                     token = registerResponse.Token
                 })
         };
+    }
+
+    [HttpGet("is-seller")]
+    [TokenValidation]
+    public IActionResult IsSeller()
+    {
+        if (HttpContext.Items["SimplifiedUser"] is SimpleUser user)
+            return user.UserRole switch
+            {
+                UserRole.Seller => Ok(true),
+                UserRole.Buyer => Ok(false),
+                _ => StatusCode(500, "User role not recognized.")
+            };
+
+        return StatusCode(500, "User not recognized.");
     }
 }
 
