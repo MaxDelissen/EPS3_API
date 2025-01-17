@@ -26,10 +26,12 @@ namespace API
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
             builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+            builder.Services.AddScoped<ICategorieRepository, CategorieRepository>();
             builder.Services.AddScoped<UserService>();
             builder.Services.AddScoped<ProductService>();
             builder.Services.AddScoped<ShoppingService>();
             builder.Services.AddScoped<OrderService>();
+            builder.Services.AddScoped<CategorieService>();
 
             builder.Services.AddDbContext<AppDbContext>(options =>
             {
