@@ -29,6 +29,9 @@ namespace DAL
             modelBuilder.Entity<Order>()
                 .Navigation(o => o.OrderItems).AutoInclude();
 
+            //Autoinclude categoryname for productcategory
+            modelBuilder.Entity<ProductCategory>().Navigation(pc => pc.Category).AutoInclude();
+
             modelBuilder.Entity<OrderItem>()
                 .Property(o => o.Quantity).HasDefaultValue(1);
         }
